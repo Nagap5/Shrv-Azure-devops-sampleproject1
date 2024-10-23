@@ -16,10 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up PowerShell
-        shell: pwsh
-
       - name: Validate PowerShell script
+        shell: pwsh
         run: |
           # Check for syntax errors in the PowerShell script
           $scriptPath = "./CreateStorageAccount.ps1"
@@ -38,6 +36,7 @@ jobs:
           }
 
       - name: Run Tests
+        shell: pwsh
         run: |
           # Here you can add any test commands or validations
           Write-Host "Add your testing logic here."
