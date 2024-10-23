@@ -20,7 +20,7 @@ jobs:
         shell: pwsh
         run: |
           # Check for syntax errors in the PowerShell script
-          $scriptPath = "./CreateStorageAccount.ps1"
+          $scriptPath = "./scripts/CreateStorageAccount.ps1"
           if (Test-Path $scriptPath) {
               try {
                   # Execute the script to validate syntax
