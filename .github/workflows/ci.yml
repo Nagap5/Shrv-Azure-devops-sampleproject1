@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch if needed
+  pull_request:
+    branches:
+      - main  # Change to your default branch if needed
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PowerShell
+        uses: actions/setup-powershell@v1
+
+      - name: Validate PowerShell script
+        run: |
+          # Check for syntax errors in the PowerShell script
+          $scriptPath = "./CreateStorageAccount.ps1"
+          if (Test-Path $scriptPath) {
+              $errors = $null
+              try {
+                  $errors = Invoke-Expression -Command "powershell -NoProfile -Command & { . '$scriptPath' }"
+              } catch {
+                  Write-Host "Script validation failed with the following error: $_"
+                  exit 1
+              }
+              if ($errors) {
+                  Write-Host "Script executed with warnings: $errors"
+              }
+          } else {
+              Write-Host "Script not found at path: $scriptPath"
+              exit 1
+          }
+
+      - name: Run Tests
+        run: |
+          # Here you can add any test commands or validations
+          Write-Host "Add your testing logic here."
+
